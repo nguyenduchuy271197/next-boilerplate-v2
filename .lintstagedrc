@@ -1,5 +1,5 @@
 {
-  "src/**/*.{ts,tsx}": [
+  "*.tsx": [
     "yarn lint:fix",
     "yarn prettier:write",
     "git add ."
