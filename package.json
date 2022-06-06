@@ -45,7 +45,7 @@
     "*.{ts, tsx}": [
       "yarn lint:fix",
       "yarn prettier:write",
-      "git add"
+      "git add ."
     ]
   }
 }
