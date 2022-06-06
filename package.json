@@ -43,7 +43,8 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint --fix",
+      "yarn lint:fix",
+      "yarn prettier:write",
       "git add"
     ]
   }
