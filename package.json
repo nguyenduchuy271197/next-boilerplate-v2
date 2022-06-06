@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --cache --fix",
+    "lint:fix": "eslint --cache --fix",
     "lint:es": "npx eslint . --ext .js,.jsx,.ts,.tsx",
     "prettier": "npx prettier --check .",
     "prettier:write": "npx prettier --write .",
