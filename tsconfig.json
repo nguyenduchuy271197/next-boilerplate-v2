@@ -19,8 +19,12 @@
       "@*": ["*"]
     }
   },
+  "ts-node": {
+    "esm": true
+  },
   "include": [
     "**/*.config.js",
+    "**/*.config.ts",
     ".eslintrc.js",
     "next-env.d.ts",
     "src/**/*.ts",
@@ -28,6 +32,6 @@
     "src/**/*.tsx",
     "test/**/*.ts",
     "test/**/*.tsx"
-  ],
+, "next-sitemap.config.js"  ],
   "exclude": ["node_modules", ".next", ".vercel", "out"]
 }
