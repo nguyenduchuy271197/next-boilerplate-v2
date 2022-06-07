@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { DefaultSeo } from 'next-seo'
