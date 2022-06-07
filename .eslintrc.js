@@ -4,6 +4,15 @@ module.exports = {
     es6: true,
     node: true,
   },
+  settings: {
+    // to support @/ path
+    'import/resolver': {
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
+    },
+    react: {
+      version: 'detect',
+    },
+  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
