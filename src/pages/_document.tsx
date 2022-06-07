@@ -1,5 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
+const isProd = process.env.NODE_ENV === 'production'
+
 export default function Document() {
   return (
     <Html lang="en-US">
@@ -12,6 +14,14 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        {/* Cloudflare Web Analytics */}
+        {isProd && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "0e9f8f2c29e440dcb174ae36bcbf0da0"}'
+          />
+        )}
       </body>
     </Html>
   )
