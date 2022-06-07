@@ -22,6 +22,7 @@ module.exports = {
     'prettier/prettier': 'error', // Eslint rules
     'react/jsx-props-no-spreading': 'off',
     'react/function-component-definition': 'off',
+    'import/prefer-default-export': 'off',
   },
   ignorePatterns: ['.eslintrc.js'],
   overrides: [
