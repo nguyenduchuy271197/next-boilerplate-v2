@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import NavBar from './NavBar'
 
 const Header = () => {
@@ -9,19 +10,20 @@ const Header = () => {
     <div>
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
-          <a href="https://flowbite.com" className="flex items-center">
-            <Image
-              className="mr-3 sm:h-9"
-              alt="Flowbite Logo"
-              src="https://flowbite.com/docs/images/logo.svg"
-              height={24}
-              width={24}
-            />
+          <Link href="/">
+            <a className="flex items-center gap-3">
+              <Image
+                alt="Flowbite Logo"
+                src="https://flowbite.com/docs/images/logo.svg"
+                height={24}
+                width={24}
+              />
 
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
-            </span>
-          </a>
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                Flowbite
+              </span>
+            </a>
+          </Link>
           <button
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
             data-collapse-toggle="mobile-menu"

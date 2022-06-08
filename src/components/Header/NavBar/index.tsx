@@ -2,10 +2,9 @@ import NavItem from './NavItem'
 
 const navItems = [
   { href: '/', name: 'Home' },
-  { href: '/about', name: 'About' },
-  { href: '/services', name: 'Services' },
-  { href: '/pricing', name: 'Pricing' },
-  { href: '/contact', name: 'Contact' },
+  { href: '/blog', name: 'Blog' },
+  { href: '/register', name: 'Register' },
+  { href: '/login', name: 'Login' },
 ]
 
 const NavBar = () => {
