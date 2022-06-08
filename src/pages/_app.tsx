@@ -1,11 +1,23 @@
-import '../styles/globals.scss'
+import '@styles/globals.scss'
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { DefaultSeo } from 'next-seo'
-
 import SEO from '@config/next-seo.config'
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <>
       {/* Google Analytics scripts */}
@@ -15,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ''
         }`}
       />
-
       <Script id="ga-script" strategy="lazyOnload">
         {`
         window.dataLayer = window.dataLayer || [];
@@ -27,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     `}
       </Script>
       <DefaultSeo {...SEO} />
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </>
   )
 }

@@ -32,6 +32,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/function-component-definition': 'off',
     'import/prefer-default-export': 'off',
+    "jsx-a11y/anchor-is-valid": "off"
   },
   ignorePatterns: ['.eslintrc.js'],
   overrides: [
@@ -49,6 +50,6 @@ module.exports = {
       parserOptions: {
         project: ['./tsconfig.json'], // Specify it only for TypeScript files
       },
-    },
+    }
   ],
 }

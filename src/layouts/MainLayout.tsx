@@ -1,7 +1,19 @@
+import Footer from '@components/Footer'
+import Header from '@components/Header'
 import React from 'react'
 
-const MainLayout = () => {
-  return <div>MainLayout</div>
+type Props = {
+  children: React.ReactNode
+}
+
+const MainLayout: React.FunctionComponent<Props> = ({ children }) => {
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </>
+  )
 }
 
 export default MainLayout

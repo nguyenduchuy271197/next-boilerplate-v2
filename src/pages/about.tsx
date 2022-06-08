@@ -2,11 +2,7 @@ import type { ReactElement } from 'react'
 import MainLayout from '@layouts/MainLayout'
 
 const Home = () => {
-  return (
-    <div className="h-96 flex justify-center items-center bg-slate-200">
-      <h1 className="">Hello world</h1>
-    </div>
-  )
+  return <h1 className="">About</h1>
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
