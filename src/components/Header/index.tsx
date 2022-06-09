@@ -13,14 +13,14 @@ const Header = () => {
           <Link href="/">
             <a className="flex items-center gap-3">
               <Image
-                alt="Flowbite Logo"
+                alt="Like Lion"
                 src="https://flowbite.com/docs/images/logo.svg"
                 height={24}
                 width={24}
               />
 
               <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                Flowbite
+                Like Lion
               </span>
             </a>
           </Link>
