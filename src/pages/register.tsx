@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerValidationSchema } from '@validations/schema'
+import { toast } from 'react-toastify'
 
 type Inputs = {
   username: string
@@ -23,7 +24,11 @@ const Register = () => {
   } = useForm<Inputs>(formOptions)
 
   /* eslint no-console: "off" */
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (data) {
+      toast.success('Register successful. Please login')
+    }
+  }
 
   return (
     <div>

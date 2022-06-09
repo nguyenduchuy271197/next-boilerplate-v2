@@ -2,9 +2,10 @@ import '@styles/globals.scss'
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import Script from 'next/script'
 import { DefaultSeo } from 'next-seo'
 import SEO from '@config/next-seo.config'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -20,24 +21,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      {/* Google Analytics scripts */}
-      <Script
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${
-          process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ''
-        }`}
-      />
-      <Script id="ga-script" strategy="lazyOnload">
-        {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || ''}', {
-        page_path: window.location.pathname,
-        });
-    `}
-      </Script>
       <DefaultSeo {...SEO} />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        draggable={false}
+        closeOnClick
+        pauseOnHover={false}
+      />
       {getLayout(<Component {...pageProps} />)}
     </>
   )
