@@ -6,6 +6,7 @@ import { DefaultSeo } from 'next-seo'
 import SEO from '@config/next-seo.config'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { wrapper } from '@app/store'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -36,4 +37,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)

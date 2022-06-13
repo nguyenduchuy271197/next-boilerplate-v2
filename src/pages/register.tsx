@@ -1,10 +1,14 @@
-import type { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import MainLayout from '@layouts/MainLayout'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerValidationSchema } from '@validations/schema'
 import { toast } from 'react-toastify'
+import { clearMessage } from '@features/Auth/message'
+import { RootState } from '@app/store'
+import { register as registerUser } from '@features/Auth/authSlice'
+import { useAppDispatch, useAppSelector } from '@app/hooks'
 
 type Inputs = {
   username: string
@@ -14,19 +18,33 @@ type Inputs = {
 }
 
 const Register = () => {
+  // const { message } = useAppSelector((state: RootState) => state.message)
+
+  const dispatch = useAppDispatch()
+  // Validation Plugin
   const formOptions = { resolver: yupResolver(registerValidationSchema) }
 
-  // get functions to build form with useForm() hook
+  useEffect(() => {
+    dispatch(clearMessage())
+  }, [dispatch])
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>(formOptions)
 
-  /* eslint no-console: "off" */
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (data) {
+  const handleRegister: SubmitHandler<Inputs> = (formValue) => {
+    // console.log(formValue)
+    // console.log(message)
+    const { username, email, password } = formValue
+
+    try {
+      // await dispatch(registerUser({ username, email, password })).unwrap()
       toast.success('Register successful. Please login')
+    } catch (rejectedValueOrSerializedError) {
+      // handle error here
+      toast.error('Register Fail!')
     }
   }
 
@@ -37,7 +55,7 @@ const Register = () => {
           <h3 className="text-2xl font-bold text-center">Join us</h3>
 
           {/* eslint @typescript-eslint/no-misused-promises: "off" */}
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleRegister)}>
             <div className="mt-4">
               {/* Username */}
               <div className="mt-4">
