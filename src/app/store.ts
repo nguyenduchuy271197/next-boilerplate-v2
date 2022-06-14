@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { Action } from 'redux'
-import userReducer from '@features/Auth/authSlice'
+import authReducer from '@features/Auth/authSlice'
 import { createWrapper } from 'next-redux-wrapper'
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    auth: authReducer,
   },
 })
 

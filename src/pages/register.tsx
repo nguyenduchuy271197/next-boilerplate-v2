@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactElement, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import MainLayout from '@layouts/MainLayout'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerValidationSchema } from '@validations/schema'
 import { toast } from 'react-toastify'
-import { clearMessage } from '@features/Auth/message'
-import { RootState } from '@app/store'
-import { register as registerUser } from '@features/Auth/authSlice'
+import { clearState, register as registerUser } from '@features/Auth/authSlice'
 import { useAppDispatch, useAppSelector } from '@app/hooks'
 
 type Inputs = {
@@ -18,15 +18,12 @@ type Inputs = {
 }
 
 const Register = () => {
-  // const { message } = useAppSelector((state: RootState) => state.message)
-
+  const { isFetching, isSuccess, isError, errorMessage } = useAppSelector(
+    (state) => state.auth
+  )
   const dispatch = useAppDispatch()
-  // Validation Plugin
+  const router = useRouter()
   const formOptions = { resolver: yupResolver(registerValidationSchema) }
-
-  useEffect(() => {
-    dispatch(clearMessage())
-  }, [dispatch])
 
   const {
     register,
@@ -34,18 +31,30 @@ const Register = () => {
     formState: { errors },
   } = useForm<Inputs>(formOptions)
 
-  const handleRegister: SubmitHandler<Inputs> = (formValue) => {
-    // console.log(formValue)
-    // console.log(message)
-    const { username, email, password } = formValue
-
-    try {
-      // await dispatch(registerUser({ username, email, password })).unwrap()
-      toast.success('Register successful. Please login')
-    } catch (rejectedValueOrSerializedError) {
-      // handle error here
-      toast.error('Register Fail!')
+  useEffect(() => {
+    return () => {
+      dispatch(clearState())
     }
+  }, [])
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clearState())
+      toast.success('Register Successful!')
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      router.push('/login')
+    }
+
+    if (isError) {
+      toast.error(errorMessage)
+      dispatch(clearState())
+    }
+  }, [isSuccess, isError])
+
+  const handleRegister: SubmitHandler<Inputs> = async (data) => {
+    // Nguyenthilanhuong1234
+
+    await dispatch(registerUser(data)).unwrap()
   }
 
   return (

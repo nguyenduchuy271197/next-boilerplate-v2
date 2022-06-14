@@ -5,26 +5,18 @@ const API_URL = 'http://localhost:4000/v1/auth/'
 axios.defaults.baseURL = API_URL
 
 const register = (username, email, password) => {
-  return axios.post('/signup', {
+  return axios.post('/register', {
     username,
     email,
     password,
   })
 }
 
-const login = (username, password) => {
-  return axios
-    .post('/signin', {
-      username,
-      password,
-    })
-    .then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-      }
-
-      return response.data
-    })
+const login = (email, password) => {
+  return axios.post('/login', {
+    email,
+    password,
+  })
 }
 
 const logout = () => {

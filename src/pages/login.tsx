@@ -1,16 +1,26 @@
-import type { ReactElement } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ReactElement, useEffect } from 'react'
 import MainLayout from '@layouts/MainLayout'
 import Link from 'next/link'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { loginValidationSchema } from '@validations/schema'
+import { useAppDispatch, useAppSelector } from '@app/hooks'
+import { useRouter } from 'next/router'
+import { clearState, login } from '@features/Auth/authSlice'
+import { toast } from 'react-toastify'
 
 type Inputs = {
-  username: string
+  email: string
   password: string
 }
 
 const Login = () => {
+  const { isFetching, isSuccess, isError, errorMessage } = useAppSelector(
+    (state) => state.auth
+  )
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const formOptions = { resolver: yupResolver(loginValidationSchema) }
 
   const {
@@ -19,8 +29,29 @@ const Login = () => {
     formState: { errors },
   } = useForm<Inputs>(formOptions)
 
-  /* eslint no-console: "off" */
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+  useEffect(() => {
+    return () => {
+      dispatch(clearState())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clearState())
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      router.push('/')
+    }
+
+    if (isError) {
+      toast.error(errorMessage)
+      dispatch(clearState())
+    }
+  }, [isError, isSuccess])
+
+  const handleLogin: SubmitHandler<Inputs> = async (data) => {
+    await dispatch(login(data)).unwrap()
+  }
+
   return (
     <div>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -28,22 +59,22 @@ const Login = () => {
           <h3 className="text-2xl font-bold text-center">Login</h3>
 
           {/* eslint @typescript-eslint/no-misused-promises: "off" */}
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <div className="mt-4">
-              {/* Username */}
+              {/* Email */}
               <div className="mt-4">
-                <label className="block" htmlFor="username">
-                  Username
+                <label className="block" htmlFor="email">
+                  Email
                   <input
-                    {...register('username')}
-                    type="text"
-                    placeholder="Username"
+                    {...register('email')}
+                    type="email"
+                    placeholder="Email"
                     className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                    id="username"
+                    id="email"
                   />
                 </label>
                 <span className="text-xs text-red-400">
-                  {errors.username?.message}
+                  {errors.email?.message}
                 </span>
               </div>
 
